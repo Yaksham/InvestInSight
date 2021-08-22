@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            {% set total = namespace(value=0) %}
+            {% for row in user_stocks %}
+                <tr>
+                    <td>
+                        <button data-symbol="{{row.symbol}}" type="button" class="buy btn btn-info btn-sm">Buy</button>
+                        <button data-symbol="{{row.symbol}}" type="button" class="sell btn btn-info btn-sm">Sell</button>
+                        {{row.symbol.upper()}}
+                    </td>
+                    <td>{{row.amount}}</td>
+                    <td>${{"%.2f"|format(current_price[row['symbol']])}}</td>
+                    <td>${{"%.2f"|format(current_price[row['symbol']] * row.amount)}}</td>
+                    {% set total.value = total.value + current_price[row['symbol']] * row.amount %}
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>CASH</td>
+                <td></td>
+                <td></td>
+                <td>${{"%.2f"|format(cash)}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${{"%.2f"|format(cash + total.value)}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        let option = document.querySelectorAll('.buy');
+        for (let i = 0; i < option.length; i++) {
+            option[i].addEventListener('click', function(event) {
+                let symbol = event.target.dataset.symbol
+                let url = new URL(window.location.href);
+                url.pathname = "buy"
+                url.searchParams.set('symbol', symbol);
+                window.location.href = url.href;
+            })
+        };
+
+        let option2 = document.querySelectorAll('.sell');
+        for (let i = 0; i < option.length; i++) {
+            option2[i].addEventListener('click', function(event) {
+                let symbol = event.target.dataset.symbol
+                let url = new URL(window.location.href);
+                url.pathname = "sell"
+                url.searchParams.set('ticket', symbol);
+                window.location.href = url.href;
+            })
+        };
+    </script>
+{% endblock %}
