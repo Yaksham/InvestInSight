@@ -1,7 +1,11 @@
-# Finance
-A site to "buy" and "sell" stocks, built with Flask and SQLite for user data.
-
-Users can create an account, look up stock prices, and buy/sell stocks.   They can see the current portfolio of their stocks and also the history of their transactions.
+# InvestInSight
+(Flask, Python, Javascript, API, SQLite)  
+InvestInSight is a web-based stock trading simulation application that allows users to trade stocks, track
+portfolios, and view real-time stock prices.  
+• Developed a Flask Web Application to buy, sell and manage (mock) stocks.  
+• Retrieved stocks using the IEX API.  
+• Implemented user accounts to manage portfolio and history.  
+• Enacted trade history page allowing users to quickly track their transactions.
 
 ## Requirements
 The site uses IEX’s API to fetch stock data and thus you need an API key from https://iexcloud.io/
